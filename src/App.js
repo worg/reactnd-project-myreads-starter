@@ -3,32 +3,47 @@ import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BookList from './BookList'
 import SearchForm from './SearchForm'
-import { EmptyArr } from './constants'
 import './App.css'
 
 class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: EmptyArr,
+      books: [],
+      searchQuery: '',
     };
   }
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
       this.setState({ books });
-      console.warn('Books: ', books);
     });
   }
 
+  updateShelf = (e) => {
+    const { 
+      target: { dataset: data, value }
+    } = e;
+
+    BooksAPI.update({ id: data.id }, value).then(r => {
+      this.setState(state => ({
+        books: state.books.map(b => {
+          if (b.id === data.id) {
+            b.shelf = value;
+          }
+          return b;
+        })
+      }));
+    });
+  }
 
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <BookList books={this.state.books}/>
+          <BookList books={this.state.books} updateShelf={this.updateShelf} />
         )}/>
-        <Route path='/search' render={SearchForm}/>
+        <Route path='/search/:query' render={SearchForm}/>
       </div>
     )
   }

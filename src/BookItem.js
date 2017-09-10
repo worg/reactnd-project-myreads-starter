@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default ({ book }) => (
+export default ({ book, onChange }) => (
   <div className="book">
     <div className="book-top">
       <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
       <div className="book-shelf-changer">
         <select
+          onChange={onChange}
           data-id={book.id}
           defaultValue={book.shelf}>
           <option value="none" disabled>Move to…</option>

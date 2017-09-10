@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Shelf from './Shelf';
+import { EmptyArr } from './constants'
 
 const getShelfTitle = (id) => {
   switch (id) {
@@ -14,14 +15,14 @@ const getShelfTitle = (id) => {
 };
 
 
-export default ({ books }) => {
+export default ({ books, updateShelf }) => {
   const shelves = books.reduce((p, c) => {
-    p[c.shelf].push(c);
+    p[c.shelf] = p[c.shelf].concat(c);
     return p;
   }, {
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
+    currentlyReading: EmptyArr,
+    wantToRead: EmptyArr,
+    read: EmptyArr,
   });
 
   return (
@@ -32,7 +33,11 @@ export default ({ books }) => {
       <div className="list-books-content">
         <div>
           {Object.keys(shelves).map(s => (
-            <Shelf key={s} title={getShelfTitle(s)} books={shelves[s]} />
+            <Shelf
+              key={s}
+              title={getShelfTitle(s)}
+              books={shelves[s]}
+              updateShelf={updateShelf} />
           ))}
         </div>
       </div>
