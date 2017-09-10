@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BookItem from './BookItem';
 
-const SearchForm = ({ query, books, handleSearch, updateShelf }) => (
+const SearchForm = ({ query, books, handleSearch, clearSearch, updateShelf }) => (
   <div className="search-books">
     <div className="search-books-bar">
-      <Link className='close-search' to='/'>Close</Link>
+      <Link onClick={clearSearch} className='close-search' to='/'>Close</Link>
       <div className="search-books-input-wrapper">
         {/*
           NOTES: The search from BooksAPI is limited to a particular set of search terms.

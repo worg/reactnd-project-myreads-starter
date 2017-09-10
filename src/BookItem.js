@@ -8,7 +8,7 @@ export default ({ book, onChange }) => (
         <select
           onChange={onChange}
           data-id={book.id}
-          defaultValue={book.shelf}>
+          defaultValue={book.shelf || 'none'}>
           <option value="none" disabled>Move to…</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
@@ -18,6 +18,6 @@ export default ({ book, onChange }) => (
       </div>
     </div>
     <div className="book-title">{book.title}</div>
-    <div className="book-authors">{book.authors.join(', ')}</div>
+    <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
   </div>
 );
