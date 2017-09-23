@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce'
 import * as BooksAPI from './BooksAPI'
 import BookList from './BookList'
 import SearchForm from './SearchForm'
+import BookDetails from './BookDetails'
 import { EmptyArr } from './constants'
 import './App.css'
 
@@ -27,8 +28,9 @@ class BooksApp extends React.Component {
     const { 
       target: { dataset: data, value }
     } = e;
-
+  
     BooksAPI.update({ id: data.id }, value).then(r => {
+      // currentBook = this.state.books.
       this.setState(state => ({
         books: state.books.map(b => {
           if (b.id === data.id) {
@@ -42,7 +44,6 @@ class BooksApp extends React.Component {
 
   handleSearch = (e) => {
     const { target: { value } } = e;
-    console.warn('E:', value);
     this.performSearch(value);
   }
 
@@ -85,18 +86,25 @@ class BooksApp extends React.Component {
         <Route exact path='/' render={() => (
           <BookList books={this.state.books} updateShelf={this.updateShelf} />
         )}/>
-        <Route path='/search/:query?' render={({ match }) => {
+        <Route path='/search/:query?' render={({ match, history }) => {
           const { params: { query } } = match;
-          query && this.performSearch(query);
           return (
             <SearchForm
+              history={history}
               books={this.state.filtered}
-              query={match.params.query}
+              query={this.state.searchQuery || query}
               updateShelf={this.updateShelf}
               handleSearch={this.handleSearch}
               clearSearch={this.clearSearch} />
           );
         }}/>
+        <Route path='/book/:id'
+        render={({ match }) => {
+          const { params: { id } } = match;
+          const book = this.state.books.filter(b => b.id === id);
+          return book.length > 0 && <BookDetails book={book[0]} />
+        }}
+        />
       </div>
     )
   }
