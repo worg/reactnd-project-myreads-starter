@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import BookItem from './BookItem';
 import { EmptyArr } from './constants';
 
@@ -16,9 +15,11 @@ export default ({ title, books, updateShelf }) => (
         )}
         {books.map((b, i) => (
           <li key={i}>
-            <Link to={`/book/${b.id}`}>
-              <BookItem book={b} onChange={updateShelf} />
-            </Link>
+            <BookItem
+              isLink
+              book={b}
+              onChange={updateShelf}
+             />
           </li>
         ))}
       </ol>
