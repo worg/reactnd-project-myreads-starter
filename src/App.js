@@ -58,7 +58,7 @@ class BooksApp extends React.Component {
       BooksAPI.search(searchQuery, 100).then(result => {
         let filtered = result;
         if (result.error) {
-          filtered = result.items;
+          filtered = EmptyArr;
         }
 
         filtered = filtered.map(r => {

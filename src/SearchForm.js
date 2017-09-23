@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BookItem from './BookItem';
+import { EmptyArr } from './constants'
 
 export class SearchForm extends Component {
   componentDidMount() {
@@ -54,6 +55,17 @@ export class SearchForm extends Component {
                 <BookItem book={b} onChange={updateShelf} />
               </li>
             ))}
+            {(books.length < 1 && books !== EmptyArr && query !== '') && (
+              <h4>
+                Sorry we didn't found any book matching
+                your query :(
+              </h4>
+            )}
+            {books === EmptyArr && (
+              <h4>
+                Finding a nice read for you…
+              </h4>
+            )}
           </ol>
         </div>
       </div>
