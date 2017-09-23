@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import debounce from 'lodash.debounce'
 import * as BooksAPI from './BooksAPI'
 import BookList from './BookList'
@@ -12,8 +13,8 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
-      filtered: [],
+      books: EmptyArr,
+      filtered: EmptyArr,
       searchQuery: '',
     };
   }
@@ -101,8 +102,21 @@ class BooksApp extends React.Component {
         <Route path='/book/:id'
         render={({ match }) => {
           const { params: { id } } = match;
-          const book = this.state.books.filter(b => b.id === id);
-          return book.length > 0 && <BookDetails book={book[0]} />
+          const { books } = this.state;
+          const book = books.filter(b => b.id === id);
+          return book.length > 0 ? (
+            <BookDetails
+              book={book[0]}
+              updateShelf={this.updateShelf}
+            />
+          ) : (
+            <div className='book-detail'>
+              <Link className='close-search' to='/'>Back</Link>
+              <h1>
+                {books !== EmptyArr ? 'No book found' : 'Loading…'}
+              </h1>
+            </div>
+          )
         }}
         />
       </div>

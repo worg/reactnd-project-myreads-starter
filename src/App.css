@@ -118,6 +118,10 @@ body, .app {
   padding: 10px 15px;
   text-align: left;
 }
+.books-grid li a {
+  text-decoration: none;
+  color: inherit;
+}
 
 .book {
   width: 140px;
@@ -171,4 +175,17 @@ body, .app {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+.book-detail {
+  text-align: center;
+}
+
+.book-detail-description {
+  text-align: justify;
+  padding: 2em;
+}
+
+.book-item {
+  display: inline-block;
 }

@@ -1,18 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Shelf from './Shelf';
-import { EmptyArr } from './constants'
-
-const getShelfTitle = (id) => {
-  switch (id) {
-    case 'currentlyReading': 
-      return 'Currently Reading';
-    case 'wantToRead': 
-      return 'Want to Read';
-    case 'read': default:
-      return 'Read';
-  }
-};
+import { EmptyArr } from './constants';
+import { getShelfTitle } from './utils';
 
 
 export default ({ books, updateShelf }) => {
