@@ -36,4 +36,4 @@ export default ({ books, updateShelf }) => {
       </div>
     </div>
   );
-}
+};

@@ -7,4 +7,4 @@ export const getShelfTitle = (id) => {
     case 'read': default:
       return 'Read';
   }
-}
+};

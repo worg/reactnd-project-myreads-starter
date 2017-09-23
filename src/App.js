@@ -1,13 +1,13 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import debounce from 'lodash.debounce'
-import * as BooksAPI from './BooksAPI'
-import BookList from './BookList'
-import SearchForm from './SearchForm'
-import BookDetails from './BookDetails'
-import { EmptyArr } from './constants'
-import './App.css'
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import debounce from 'lodash.debounce';
+import * as BooksAPI from './BooksAPI';
+import BookList from './BookList';
+import SearchForm from './SearchForm';
+import BookDetails from './BookDetails';
+import { EmptyArr } from './constants';
+import './App.css';
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -116,12 +116,12 @@ class BooksApp extends React.Component {
                 {books !== EmptyArr ? 'No book found' : 'Loading…'}
               </h1>
             </div>
-          )
+          );
         }}
         />
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;

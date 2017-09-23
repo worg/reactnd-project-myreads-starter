@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BookItem from './BookItem';
-import { EmptyArr } from './constants'
+import { EmptyArr } from './constants';
 
 export class SearchForm extends Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ export class SearchForm extends Component {
   componentWillUpdate(nextProps, nextState) {
     const { query, history } = nextProps;
     if (query !== '' && query !== this.props.query) {
-      history.replace(`/search/${query}`)
+      history.replace(`/search/${query}`);
     }
   }
 

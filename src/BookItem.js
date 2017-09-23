@@ -33,4 +33,4 @@ export default ({ book, onChange, isLink }) => {
       <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
     </div>
   );
-}
+};
