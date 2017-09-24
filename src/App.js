@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { NotificationStack } from 'react-notification';
 import debounce from 'lodash.debounce';
 import * as BooksAPI from './BooksAPI';
 import BookList from './BookList';
 import SearchForm from './SearchForm';
 import BookDetails from './BookDetails';
+import { getShelfTitle } from './utils';
 import { EmptyArr } from './constants';
 import './App.css';
 
@@ -16,6 +18,7 @@ class BooksApp extends React.Component {
       books: EmptyArr,
       filtered: EmptyArr,
       searchQuery: '',
+      notifications: new Set(),
     };
   }
 
@@ -31,14 +34,19 @@ class BooksApp extends React.Component {
     } = e;
   
     BooksAPI.update({ id: data.id }, value).then(r => {
-      // currentBook = this.state.books.
+      const { filtered, books } = this.state;
+      let currentBook = (filtered.length > 0 ? filtered : books).filter(book => book.id === data.id);
+      // getShelfTitle()
       this.setState(state => ({
-        books: state.books.map(b => {
+        books: state.books.filter(b => data.id !== b.id).concat(currentBook).map(b => {
           if (b.id === data.id) {
             b.shelf = value;
           }
           return b;
-        })
+        }),
+        notifications: state.notifications.add(
+          this.createNotification(currentBook[0], value)
+        )
       }));
     });
   }
@@ -81,6 +89,23 @@ class BooksApp extends React.Component {
     });
   }
 
+  createNotification = (book, shelf) => {
+    const action = shelf !== 'none' ? 'added to' : 'removed from';
+    return {
+      message: `${book.title} ${action} ${getShelfTitle(shelf)}…`,
+      key: this.state.notifications.size + 1,
+    }
+  }
+
+  dismissNotification = (notification) => {
+    this.setState(state => {
+      state.notifications.delete(notification);
+      return {
+        notifications: state.notifications,
+      }
+    });
+  }
+
   render() {
     return (
       <div className="app">
@@ -118,6 +143,11 @@ class BooksApp extends React.Component {
             </div>
           );
         }}
+        />
+        <NotificationStack
+          notifications={Array.from(this.state.notifications)}
+          onDismiss={this.dismissNotification}
+          dismissAfter={2e3}
         />
       </div>
     );
