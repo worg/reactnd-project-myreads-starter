@@ -7,6 +7,10 @@ import { getShelfTitle } from './utils';
 
 export default ({ books, updateShelf }) => {
   const shelves = books.reduce((p, c) => {
+    if (c.shelf === 'none') {
+      return p;
+    }
+    
     p[c.shelf] = p[c.shelf].concat(c);
     return p;
   }, {
