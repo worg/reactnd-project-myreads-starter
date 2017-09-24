@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 export default ({ book, onChange, isLink }) => {
   const bookStyle = {
-    width: 128,
-    height: 188,
     backgroundImage: `url(${book.imageLinks.thumbnail})`
   };
 
@@ -14,7 +12,7 @@ export default ({ book, onChange, isLink }) => {
         {!isLink ? (
           <div className='book-cover' style={bookStyle} />
         ): (
-          <Link to={`/book/${book.id}`} style={bookStyle} />
+          <Link to={`/book/${book.id}`} className='book-cover' style={bookStyle} />
         )}
         <div className="book-shelf-changer">
           <select
